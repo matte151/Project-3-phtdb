@@ -1,7 +1,6 @@
 import email
 from django.db import models
 # from django.forms import DateField
-from phonenumber_field.modelfields import PhoneNumberField
 from django.urls import reverse
 from django.contrib.auth.models import User
 # Create your models here.
@@ -35,7 +34,7 @@ class Vet(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=500)
     email = models.CharField(max_length=50)
-    phone = models.PhoneNumberField()
+    phone = models.CharField(max_length=15)
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     user = models.OneToOneField(User,on_delete=models.CASCADE)
 
