@@ -20,6 +20,9 @@ class Pet(models.Model):
     notes = models.CharField(max_length=1000)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'pet_id': self.id})
+
 
 class Checkup(models.Model):
     date = models.DateField()

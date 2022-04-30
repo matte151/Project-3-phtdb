@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render
 
-from django.views.generic import ListView, DetailView, CreateView
+from .models import Pet
+
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
@@ -12,19 +14,36 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def home(request):
     return render(request, 'base.html')
 
+def about(request):
+    return render(request, 'about.html')
+
 @login_required
-def pet_index(request):
+def pets_index(request):
     pets = Pet.objects.filter(user=request.user)
     return render(request, 'pets/index.html', {'pets': pets})
+
+
+def pets_detail(request, pet_id):
+    pet = Pet.objects.get(id=pet_id)
+    return render(request, 'pets/detail.html', {'pet': pet })
 
 
 class PetCreate(LoginRequiredMixin, CreateView):
     model = Pet
     fields = ['name', 'type', 'subtype', 'sex', 'birthday', 'color', 'weight']
+    success_url = '/pets/'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+class PetUpdate(UpdateView):
+    model = Pet
+    fields = ['name', 'type', 'subtype', 'sex', 'birthday', 'color', 'weight']
+
+class PetDelete(DeleteView):
+    model = Pet
+    success_url = '/pets/'
 
 def signup(request):
     error_message = ''
