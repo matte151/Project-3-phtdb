@@ -9,6 +9,10 @@ class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+    	return f"User ID: {self.user} Profile Name: {self.name} Profile ID: {self.id}"
+    
+
 class Pet(models.Model):
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=100)
@@ -22,6 +26,9 @@ class Pet(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pet_id': self.id})
+    
+    def __str__(self):
+    	return f"Pet Name: {self.name} ID: {self.id}"
 
 
 class Checkup(models.Model):
@@ -29,9 +36,15 @@ class Checkup(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     note = models.CharField(max_length=200)
 
+    def __str__(self):
+	    return f"Pet : {self.pet} ID: {self.id}"    
+
 class Photo(models.Model):
     url = models.CharField(max_length=200)
     checkup = models.ForeignKey(Checkup, on_delete=models.CASCADE)
+
+    def __str__(self):
+	    return f"Checkup : {self.checkup} ID: {self.id} URL: {self.url}"    
 
 class Vet(models.Model):
     name = models.CharField(max_length=100)
@@ -40,6 +53,9 @@ class Vet(models.Model):
     phone = models.CharField(max_length=15)
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     user = models.OneToOneField(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+	    return f"Vet Name : {self.name} ID: {self.id}"    
 
 # class Prescriptions(models.Model):
 #     name = models.CharField(max_length=100)
