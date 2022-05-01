@@ -27,7 +27,7 @@ def pets_detail(request, pet_id):
     pet = Pet.objects.get(id=pet_id)
     return render(request, 'pets/detail.html', {'pet': pet })
 
-
+# We need to set this up so that only Vets can add pets.
 class PetCreate(LoginRequiredMixin, CreateView):
     model = Pet
     fields = ['name', 'type', 'subtype', 'sex', 'birthday', 'color', 'weight']
