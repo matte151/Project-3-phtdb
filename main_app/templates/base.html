@@ -7,15 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Health Tracker</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 <body>
     <header class="navbar">
         <nav>
+            <h1 class="center-align blue-grey lighten-4 black-text text-darken-2"> Pet Health Tracker </h1>
             <div class="navbar-wrapper">
                 <ul class="links">
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'pets_create' %}" class="black-text text-darken-2">Add Pet</a></li>
+                    <li><a href="{% url 'logout'%}" class="black-text text-darken-2">Log Out</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}" class="black-text text-darken-2">Login</a></li>
+                    <li><a href="{% url 'signup' %}" class="black-text text-darken-2">Sign Up</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'about' %}" class="black-text text-darken-2">About</a></li>
                 </ul>
             </div>
         </nav>
@@ -24,7 +31,7 @@
          {% block content %}
          {% endblock %}
      </main>
-     <footer class="page-footer">
+     <footer class="page-footer blue-grey lighten-4 black-text text-darken-2 ">
         <div class="center">All Rights Reserved, &copy; 2022 Pet Health Tracker &nbsp;</div>
      </footer>
 </body>
