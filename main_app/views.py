@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render
 
-from .models import Pet
+import uuid
+import boto3
+from .models import Pet, Photo
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
@@ -9,22 +11,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
+BUCKET = 'phtdb'
+
 # Create your views here.
 
 
-def signup(request):
-    error_message = ''
-    if request.method = 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('index')
-        else:
-            error_message = 'Ivalid sign up - please trt again'
-    form = UserCreationForm()
-    context = {'form': form, 'error_message': error_message}
-    return render(request, 'registration/signup.html', context)
 
 def home(request):
     return render(request, 'base.html')
@@ -76,4 +68,15 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 
-def add_
+def add_photo(request, pet_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            Photo.objects.create(url=url, pet_id=pet_id)
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('detail', pet_id=pet_id)
