@@ -24,6 +24,7 @@ class Pet(models.Model):
     weight = models.IntegerField()
     notes = models.CharField(max_length=1000)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # url = models.CharField(max_length=200)
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pet_id': self.id})
@@ -47,7 +48,8 @@ class Checkup(models.Model):
 
 class Photo(models.Model):
     url = models.CharField(max_length=200)
-    checkup = models.ForeignKey(Checkup, on_delete=models.CASCADE)
+    # checkup = models.ForeignKey(Checkup, on_delete=models.CASCADE)
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
 
     def __str__(self):
 	    return f"Checkup : {self.checkup} ID: {self.id} URL: {self.url}"    
