@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Add Pet</h1>  
 
-<form action="{% url 'pet_detail' %}" method="POST">
+<form action="" method="POST">
 	{% csrf_token %}
 	<table>
 		{{ form.as_table }}
