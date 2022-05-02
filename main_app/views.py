@@ -32,6 +32,7 @@ def pets_index(request):
 @login_required
 def pets_detail(request, pet_id):
     pet = Pet.objects.get(id=pet_id)
+    # checkup_form = CheckupForm()
     return render(request, 'pets/detail.html', {'pet': pet })
 
 # We need to set this up so that only Vets can add pets.
@@ -78,15 +79,16 @@ def add_checkup(request, pet_id):
 
     return redirect('detail', pet_id=pet_id)
 
-def add_pet_photo(request, pet_id):
-    photo_file = request.FILES.get('photo-file', None)
-    if photo_file:
-        s3 = boto3.client('s3')
-        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-        try:
-            s3.upload_fileobj(photo_file, BUCKET, key)
-            url = f"{S3_BASE_URL}{BUCKET}/{key}"
-            Photo.objects.create(url=url, pet_id=pet_id)
-        except:
-            print('An error occurred uploading file to S3')
-    return redirect('detail', pet_id=pet_id)
+@login_required
+def add_photo(request, pet_id):
+  photo_file = request.FILES.get('photo-file', None)
+  if photo_file:
+    s3 = boto3.client('s3')
+    key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+    try: 
+      s3.upload_fileobj(photo_file, BUCKET, key)
+      url = f"{S3_BASE_URL}{BUCKET}/{key}"
+      Photo.objects.create(url=url, pet_id=pet_id)
+    except:
+      print('We have an error here uploading to S3')
+  return redirect('detail', pet_id=pet_id)
