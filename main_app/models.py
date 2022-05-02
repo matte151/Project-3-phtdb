@@ -45,14 +45,13 @@ class Checkup(models.Model):
 	    return f"Pet : {self.pet} ID: {self.id}"
 
 
-
 class Photo(models.Model):
     url = models.CharField(max_length=200)
     # checkup = models.ForeignKey(Checkup, on_delete=models.CASCADE)
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
 
-    def __str__(self):
-	    return f"Checkup : {self.checkup} ID: {self.id} URL: {self.url}"    
+    # def __str__(self):
+	#     return f"Checkup : {self.checkup} ID: {self.id} URL: {self.url}"    
 
 class Vet(models.Model):
     name = models.CharField(max_length=100)
