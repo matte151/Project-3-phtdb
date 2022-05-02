@@ -11,6 +11,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
+
+def signup(request):
+    error_message = ''
+    if request.method = 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+        else:
+            error_message = 'Ivalid sign up - please trt again'
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)
+
 def home(request):
     return render(request, 'base.html')
 
@@ -22,7 +37,7 @@ def pets_index(request):
     pets = Pet.objects.filter(user=request.user)
     return render(request, 'pets/index.html', {'pets': pets})
 
-
+@login_required
 def pets_detail(request, pet_id):
     pet = Pet.objects.get(id=pet_id)
     return render(request, 'pets/detail.html', {'pet': pet })
