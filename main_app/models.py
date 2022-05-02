@@ -7,10 +7,11 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=500)
+    phone = models.CharField(max_length=15)
 
     def __str__(self):
-    	return f"User ID: {self.user} Profile Name: {self.name} Profile ID: {self.id}"
+    	return f"User ID: {self.user} Profile ID: {self.id}"
     
 
 class Pet(models.Model):
@@ -36,8 +37,13 @@ class Checkup(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     note = models.CharField(max_length=200)
 
+    class Meta:
+        ordering = ['-date']
+
     def __str__(self):
-	    return f"Pet : {self.pet} ID: {self.id}"    
+	    return f"Pet : {self.pet} ID: {self.id}"
+
+
 
 class Photo(models.Model):
     url = models.CharField(max_length=200)
