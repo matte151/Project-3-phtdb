@@ -68,7 +68,17 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 
-def add_photo(request, pet_id):
+@login_required
+def add_checkup(request, pet_id):
+    form = CheckupForm(request.POST)
+    if form.is_valid():
+        new_checkup = form.save(commit=False)
+        new_checkup.pet_id = pet_id
+        new_checkup.save()
+
+    return redirect('detail', pet_id=pet_id)
+
+def add_pet_photo(request, pet_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
         s3 = boto3.client('s3')
