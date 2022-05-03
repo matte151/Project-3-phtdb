@@ -1,7 +1,7 @@
 from django.forms import ModelForm
-# from .models import Checkup
+from .models import Checkup
 
-# class CheckupForm(ModelForm):
-#     class Meta:
-#         model = Checkup
-#         exclude = ['pet']
+class CheckupForm(ModelForm):
+    class Meta:
+        model = Checkup
+        fields = ['date', 'note']

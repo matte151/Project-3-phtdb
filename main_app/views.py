@@ -7,7 +7,7 @@ from .models import Pet, Photo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-# from .forms import CheckupForm
+from .forms import CheckupForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -72,11 +72,11 @@ def signup(request):
 
 @login_required
 def add_checkup(request, pet_id):
-    # form = CheckupForm(request.POST)
-    # if form.is_valid():
-    #     new_checkup = form.save(commit=False)
-    #     new_checkup.pet_id = pet_id
-    #     new_checkup.save()
+    form = CheckupForm(request.POST)
+    if form.is_valid():
+        new_checkup = form.save(commit=False)
+        new_checkup.pet_id = pet_id
+        new_checkup.save()
 
     return redirect('detail', pet_id=pet_id)
 
