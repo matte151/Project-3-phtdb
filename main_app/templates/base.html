@@ -8,15 +8,18 @@
     <title>Pet Health Tracker</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Fredoka+One&family=Londrina+Shadow&family=Poiret+One&display=swap');
+    </style>
 </head>
 <body>
-    <header class="navbar amber lighten-5">
+    <header class="navbar light-blue lighten-5">
         <nav>
-            <h1 class="center-align blue-grey lighten-4 black-text text-darken-2"> Pet Health Tracker </h1>
+            <h1 id="title-header" class="center-align blue darken-4"> Pet Health Tracker </h1>
             <div class="navbar-wrapper">
                 <ul class="links">
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'pets_create' %}" class="black-text text-darken-2">Add Pet</a></li>
+                    <li><a href="{% url 'pets_create' %}" class="black-text text-darken-2" >Add Pet</a></li>
                     <li><a href="{% url 'index' %}" class="black-text text-darken-2">View Pets</a></li>
                     <li><a href="{% url 'logout'%}" class="black-text text-darken-2">Log Out</a></li>
                     {% else %}
@@ -32,7 +35,7 @@
          {% block content %}
          {% endblock %}
      </main>
-     <footer class="page-footer blue-grey lighten-4 black-text text-darken-2 ">
+     <footer class="page-footer blue darken-4">
         <div class="center">All Rights Reserved, &copy; 2022 Pet Health Tracker &nbsp;</div>
      </footer>
 </body>
