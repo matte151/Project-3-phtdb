@@ -13,20 +13,21 @@
     </style>
 </head>
 <body>
-    <header class="navbar amber lighten-5">
+    <header class="navbar blue darken-2">
         <nav>
-            <h1 id="title-header" class="center-align blue-grey lighten-4 black-text text-darken-2"> Pet Health Tracker </h1>
+            <h1 id="title-header" class="center-align light-blue lighten-3 black-text text-darken-1"> Pet Health Tracker </h1>
             <div class="navbar-wrapper">
+                <img src="phtlogo.png" class="brand-logo right">
                 <ul class="links">
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'pets_create' %}" class="black-text text-darken-2">Add Pet</a></li>
-                    <li><a href="{% url 'index' %}" class="black-text text-darken-2">View Pets</a></li>
-                    <li><a href="{% url 'logout'%}" class="black-text text-darken-2">Log Out</a></li>
+                    <li><a href="{% url 'pets_create' %}" >Add Pet</a></li>
+                    <li><a href="{% url 'index' %}">View Pets</a></li>
+                    <li><a href="{% url 'logout'%}">Log Out</a></li>
                     {% else %}
-                    <li><a href="{% url 'login' %}" class="black-text text-darken-2">Login</a></li>
-                    <li><a href="{% url 'signup' %}" class="black-text text-darken-2">Sign Up</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
                     {% endif %}
-                    <li><a href="{% url 'about' %}" class="black-text text-darken-2">About</a></li>
+                    <li><a href="{% url 'about' %}" >About</a></li>
                 </ul>
             </div>
         </nav>
@@ -35,7 +36,7 @@
          {% block content %}
          {% endblock %}
      </main>
-     <footer class="page-footer blue-grey lighten-4 black-text text-darken-2 ">
+     <footer class="page-footer blue darken-2">
         <div class="center">All Rights Reserved, &copy; 2022 Pet Health Tracker &nbsp;</div>
      </footer>
 </body>
