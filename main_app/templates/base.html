@@ -22,7 +22,7 @@
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'pets_create' %}" class="black-text text-darken-2" >Add Pet</a></li>
                     <li><a href="{% url 'index' %}" class="black-text text-darken-2">View Pets</a></li>
-                    <li><a href="{% url 'logout'%}" class="black-text text-darken-2">Log Out</a></li>
+                    <li><a href="{% url 'logout'%}" class="black-text text-darken-2 ">Log Out</a></li>
                     {% else %}
                     <li><a href="{% url 'login' %}" class="black-text text-darken-2">Login</a></li>
                     <li><a href="{% url 'signup' %}" class="black-text text-darken-2">Sign Up</a></li>

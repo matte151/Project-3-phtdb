@@ -26,5 +26,25 @@ sec {
     -webkit-text-stroke: 1px black;
 }
 
+h1 {
+    text-align: center;
+    font-family:'Fredoka One', cursive;
+    -webkit-text-stroke: 3px black;
+    color: white;
+}
+
+span {
+    color: lightskyblue;
+    -webkit-text-stroke: 1px black;
+    font-size: large;
+    font-family: 'Fredoka One', cursive;
+}
+
+p{
+    color: black;
+    font-size: medium;
+}
+
+
 
 
