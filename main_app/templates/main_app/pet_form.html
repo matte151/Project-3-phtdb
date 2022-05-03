@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<h1>Add Pet</h1>  
+<h1><i class=" medium material-icons">pets</i>Add Pet</h1>  
 
 <form action="" method="POST">
 	{% csrf_token %}
@@ -10,7 +10,7 @@
 		{{ form.as_table }}
 	</table>
 
-	<input type="submit" value="Add Pet" class="btn waves-effect waves-light blue" />
+	<input type="submit" value="Submit" class="btn waves-effect waves-light blue" />
 </form>
 
 {% endblock content %}
