@@ -35,6 +35,10 @@
                 <p>Color: {{ pet.color }}</p>
                 <p>Weight: {{ pet.weight }}</p>
             </div>
+            <div class="card-action">
+				<a href="{% url 'pets_update' pet.id %}">Edit</a>
+				<a href="{% url 'pets_delete' pet.id %}">Delete</a>
+			</div>
         </div>
     </div>
 
@@ -68,18 +72,34 @@
     </div>
 </div>
 <div class="col s6">
-    <form method="post" action="">
+    
+    <div class="card">
+        <div class="card-content">
+    <form id="add-checkup-form" method="POST" action="{% url 'detail' pet.id %}">
+        <label><h7>DATE:</h7></label>
+        <input type="datetime" name="date">
+        <label><h7>PET:</h7></label>
+        <div><h6>{{ pet.name }}</h6></div>
+        <label><h7>Note:</h7></label>
+        <textarea name="checkup" style="height: 150px;"></textarea>
+        <br><br>
+        <input type="file" name="photo-file"> 
+    </form>
+    <br>
+<form method="post" action="{% url 'add_checkup' pet.id %}">
         {% csrf_token %}
-        {{ checkup_form.as_p }}
+        <!-- {{ checkup_form.as_p }} -->
         <input type="submit" class="btn" value="Add Checkup">
     </form>
+</div></div>
+
     <div class="card">
         <div class="col s6">
-            {% if pet.checkup.count %}
-            {% for checkup in pet.checkup.all %}
+            {% if pet.checkups.count %}
+            {% for checkup in pet.checkups.all %}
                 <div class="card">
                 <div class="card-content">
-                    <span class="card-title">
+                    <!-- {{ checkup.photo }} -->
                     <p>{{ checkup.date }}</p>
                     <p>{{ checkup.pet }}</p>
                     <p>{{ checkup.note }}</p>
@@ -94,6 +114,17 @@
     </div>
 </div>
     
+
+
+<script>
+    document.addEventListener('click',handleClick);
+deleteButtons.forEach(i => {i.addEventListener('click',handleDeleteClick)});
+
+function handleDblClick(e){
+    console.log(e.target.tagName)
+    if(e.target.tagName=="INPUT"){e.target.disabled = !e.target.disabled}
+}
+</script>
 {% endblock content %}
 
     

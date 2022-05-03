@@ -7,6 +7,7 @@ from .models import Pet, Photo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+# from .forms import CheckupForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -71,11 +72,11 @@ def signup(request):
 
 @login_required
 def add_checkup(request, pet_id):
-    form = CheckupForm(request.POST)
-    if form.is_valid():
-        new_checkup = form.save(commit=False)
-        new_checkup.pet_id = pet_id
-        new_checkup.save()
+    # form = CheckupForm(request.POST)
+    # if form.is_valid():
+    #     new_checkup = form.save(commit=False)
+    #     new_checkup.pet_id = pet_id
+    #     new_checkup.save()
 
     return redirect('detail', pet_id=pet_id)
 
@@ -92,3 +93,17 @@ def add_photo(request, pet_id):
     except:
       print('We have an error here uploading to S3')
   return redirect('detail', pet_id=pet_id)
+
+def add_cuphoto(request, checkup_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(photo_file, BUCKEY, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            Photo.objects.create(url=url, checkup_id=checkup_id)
+        except:
+            print('We having an error here uploading to S3')
+    return redirect('detail', checkup_id=checkup_id)
+    
