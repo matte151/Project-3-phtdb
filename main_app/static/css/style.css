@@ -19,9 +19,12 @@ sec {
     align-items: baseline;
 }
 
+
 #title-header {
     font-family: 'Fredoka One', cursive;
     font-size: 70px;
     -webkit-text-stroke: 1px black;
 }
+
+=======
 
