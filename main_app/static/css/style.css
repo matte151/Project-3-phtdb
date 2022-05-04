@@ -13,13 +13,6 @@ footer.page-footer {
     text-align: right;
 }
 
-sec {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-}
-
-
 #title-header {
     font-family: 'Fredoka One', cursive;
     font-size: 70px;

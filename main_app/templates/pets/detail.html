@@ -2,48 +2,40 @@
 
 {% block content %}
 <div class="row">
-    <!-- <div class="row"> -->
-        <sec id="images" class="col s3">
-    {% for photo in pet.photo_set.all %}
-    
-        <img class="responsive-img card-panel" src="{{ photo.url }}">
-    
-        {% empty %}</sec>
-        <div class="card-panel teal-text center-align">No Photos Uploaded</div>
-        {% endfor %}
-    <!-- </div> -->
-</div>
-        <div class="row">
-            <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-                {% csrf_token %}
-               <input type="file" name="photo-file">
-               <br><br>
-               <input type="submit" class="btn" value="Upload Photo">
-               </form>
-        </div>
-
-<div class="row">
     <div class="col s4">
-
         <div class="card">
-            <div class="card-content">
-                <p>Name: {{ pet.name }}</p> 
-                <p>Type: {{ pet.type }}</p>
-                <p>Subtype: {{ pet.subtype }}</p>
-                <p>Sex: {{ pet.sex }}</p>
-                <p>Birthday: {{ pet.birthday }}</p>
-                <p>Color: {{ pet.color }}</p>
-                <p>Weight: {{ pet.weight }}</p>
-            </div>
-            <div class="card-action">
-				<a href="{% url 'pets_update' pet.id %}">Edit</a>
-				<a href="{% url 'pets_delete' pet.id %}">Delete</a>
-			</div>
+          <div class="card-image">
+            {% for photo in pet.photo_set.all %}
+            <img src="{{ photo.url }}">
+            {% empty %}
+            <div class="card-panel blue-text center-align">No Photos Uploaded</div>
+            {% endfor %}
+            <a class="btn-floating halfway-fab waves-effect waves- blue darken-4">
+                <i class="material-icons">add</i>
+                <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+                    {% csrf_token %}
+                    <input type="file" name="photo-file">
+                    <br><br>
+                    <input type="submit" class="btn" value="Upload Photo">
+                </form>
+            </a>
+          </div>
+          <div class="card-content">
+            <p>Name: {{ pet.name }}</p> 
+            <p>Type: {{ pet.type }}</p>
+            <p>Subtype: {{ pet.subtype }}</p>
+            <p>Sex: {{ pet.sex }}</p>
+            <p>Birthday: {{ pet.birthday }}</p>
+            <p>Color: {{ pet.color }}</p>
+            <p>Weight: {{ pet.weight }}</p>
+          </div>
+          <div class="card-action">
+            <a href="{% url 'pets_update' pet.id %}">Edit</a>
+            <a href="{% url 'pets_delete' pet.id %}">Delete</a>
+        </div>
         </div>
     </div>
-
     <div class="col s4 offset-s4">
-        
         <div class="card">
             <div class="card-content">
                 <p>Vet Name:{{ vet.name }}</p>
@@ -54,8 +46,18 @@
         </div>
     </div>
 </div>
+
+<div id="upload">
+    <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        <input type="file" name="photo-file">
+        <br><br>
+        <input type="submit" class="btn blue darken-4" value="Upload Photo">
+    </form>
+</div>
+
 <div class="card">
-    <div class="col s6">
+    <div class="col s4">
         <div class="card-content">
             {% if pet.prescription.count %}
                 {% for prescription in pet.prescription.all %} 
@@ -71,7 +73,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="col s6">
     <form method="post" action="{% url 'add_checkup' pet.id %}">
@@ -112,17 +113,6 @@
     </div>
 </div>
     
-
-
-<script>
-    document.addEventListener('click',handleClick);
-deleteButtons.forEach(i => {i.addEventListener('click',handleDeleteClick)});
-
-function handleDblClick(e){
-    console.log(e.target.tagName)
-    if(e.target.tagName=="INPUT"){e.target.disabled = !e.target.disabled}
-}
-</script>
 {% endblock content %}
 
     
