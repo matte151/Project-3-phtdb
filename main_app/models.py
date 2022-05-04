@@ -35,14 +35,18 @@ class Pet(models.Model):
 
 class Checkup(models.Model):
     date = models.DateField()
-    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     note = models.CharField(max_length=200)
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
+
 
     class Meta:
         ordering = ['-date']
 
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'checkup_id': self.id})
+
     def __str__(self):
-	    return f"Pet : {self.pet} ID: {self.id}"
+	    return f"Date : {self.date} for {self.pet} ID: {self.id}"
 
 
 class Photo(models.Model):
@@ -51,7 +55,15 @@ class Photo(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
 
     def __str__(self):
-	    return f"Pet : {self.pet} ID: {self.id} URL: {self.url}"    
+	    return f"Pet : {self.pet} ID: {self.id} URL: {self.url}"   
+
+class CheckupPhoto(models.Model):
+    url = models.CharField(max_length=200)
+    checkup = models.ForeignKey(Checkup, on_delete=models.CASCADE)
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
+
+    def __str__(self):
+	    return f"Pet : {self.pet} ID: {self.id} URL: {self.url}" 
 
 class Vet(models.Model):
     name = models.CharField(max_length=100)
@@ -68,5 +80,5 @@ class Vet(models.Model):
 #     name = models.CharField(max_length=100)
 #     dosage = models.CharField(max_length=50)
 #     refills = models.CharField(max_length=100)
-#     api fields needed??????
+#     # api fields needed??????
 #     pet = models.ManyToManyField(Pet)
