@@ -10,7 +10,7 @@
             {% empty %}
             <div class="card-panel blue-text center-align">No Photos Uploaded</div>
             {% endfor %}
-            <a class="btn-floating halfway-fab waves-effect waves-light blue">
+            <a class="btn-floating halfway-fab waves-effect waves- blue darken-4">
                 <i class="material-icons">add</i>
                 <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
                     {% csrf_token %}
