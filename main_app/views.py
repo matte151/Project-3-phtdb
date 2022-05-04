@@ -68,7 +68,6 @@ def pets_detail(request, pet_id):
 
 # We need to set this up so that only Vets can add pets.
 class PetCreate(LoginRequiredMixin, CreateView):
-    print("saby")
     model = Pet
     fields = ['name', 'type', 'subtype', 'sex', 'birthday', 'color', 'weight']
     success_url = '/pets/'
@@ -79,7 +78,6 @@ class PetCreate(LoginRequiredMixin, CreateView):
 
 
 def add_checkup(request, pet_id): 
-    print('Hello World')
     form = CheckupForm(request.POST)
     print(form.is_valid())
     if form.is_valid():
