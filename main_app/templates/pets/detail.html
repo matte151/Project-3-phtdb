@@ -70,6 +70,22 @@
     </div>
 </div>
 
+<div class="col s6">
+    <div class="card">
+        <div class="card-content">
+    <form id="add-checkup-form" method="POST" action="{% url 'detail' pet.id %}">
+        <label><h7>DATE:</h7></label>
+        <input type="datetime" name="date">
+        <label><h7>PET:</h7></label>
+        <div name="pet"><h6>{{ pet.name }}</h6></div>
+        <label><h7>Note:</h7></label>
+        <textarea name="note" style="height: 150px;"></textarea>
+        <br><br>
+        <input type="file" name="photo-file"> 
+    </form>
+    <br>
+</div>
+
 <div class="col s4">
     <form method="post" action="">
         {% csrf_token %}
