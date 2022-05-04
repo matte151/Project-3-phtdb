@@ -15,30 +15,26 @@
     </style>
 </head>
 <body>
-    <div class="header-img"></div>
-    <header class="navbar light-blue lighten-5">
-        <nav>
-            <h1 id="title-header" class="center-align blue darken-4">Pet Health Tracker</h1>
-            <div class="navbar-wrapper">
-                <ul class="links">
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'pets_create' %}" class="black-text text-darken-2" >Add Pet</a></li>
-                    <li><a href="{% url 'index' %}" class="black-text text-darken-2">View Pets</a></li>
-                    <li><a href="{% url 'logout'%}" class="black-text text-darken-2 ">Log Out</a></li>
-                    {% else %}
-                    <li><a href="{% url 'login' %}" class="black-text text-darken-2">Login</a></li>
-                    <li><a href="{% url 'signup' %}" class="black-text text-darken-2">Sign Up</a></li>
-                    {% endif %}
-                    <li><a href="{% url 'about' %}" class="black-text text-darken-2">About</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <nav>
+        <div class="nav-wrapper light-blue lighten-4">
+          <a href="{% url 'about' %}" id="title-header" class="brand-logo">Pet Health Tracker</a>
+          <ul class="links right">
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'pets_create' %}" class="black-text text-darken-2" >Add Pet</a></li>
+            <li><a href="{% url 'index' %}" class="black-text text-darken-2">View Pets</a></li>
+            <li><a href="{% url 'logout'%}" class="black-text text-darken-2 ">Log Out</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}" class="black-text text-darken-2">Login</a></li>
+            <li><a href="{% url 'signup' %}" class="black-text text-darken-2">Sign Up</a></li>
+            {% endif %}
+        </ul>
+        </div>
+      </nav>
      <main class="container">
          {% block content %}
          {% endblock %}
      </main>
-     <footer class="page-footer blue darken-4">
+     <footer class="page-footer light-blue lighten-4 black-text">
         <div class="center">All Rights Reserved, &copy; 2022 Pet Health Tracker &nbsp;</div>
      </footer>
 </body>
