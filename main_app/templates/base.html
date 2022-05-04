@@ -18,7 +18,6 @@
     <header class="navbar light-blue lighten-5">
         <nav>
             <h1 id="title-header" class="center-align blue darken-4">Pet Health Tracker</h1>
-            <div class="navbar-wrapper">
                 <ul class="links">
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'pets_create' %}" class="black-text text-darken-2" >Add Pet</a></li>
@@ -30,7 +29,6 @@
                     {% endif %}
                     <li><a href="{% url 'about' %}" class="black-text text-darken-2">About</a></li>
                 </ul>
-            </div>
         </nav>
     </header>
      <main class="container">

@@ -76,17 +76,11 @@
 
 <div class="col s6">
     <form method="post" action="{% url 'add_checkup' pet.id %}">
-        <label><h7>PET:</h7></label>
+        <label><h7>Pet:</h7></label>
         <div><h5>{{ pet.name }}</h5></div>
         {% csrf_token %}
         {{ checkup_form.as_p }}
-        <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-            {% csrf_token %}
-           <input type="file" name="photo-file">
-           <br><br>
-           <input type="submit" class="btn blue darken-4" value="Add Checkup">
-           </form>
-        <!-- <input type="submit" class="btn" value="Add Checkup"> -->
+        <input type="submit" class="btn blue darken-4" value="Add Checkup">
     </form>
     
 
@@ -102,6 +96,12 @@
                     <p>{{ checkup.date }}</p>
                     <h5>{{ checkup.pet.name }}</h5>
                     <p>{{ checkup.note }}</p>
+                    <form action="{% url 'add_checkup' pet.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+                        {% csrf_token %}
+                       <input type="file" name="photo-file">
+                       <br><br>
+                       <input type="submit" class="btn blue darken-4" value="Upload">
+                    </form>
                     </span>
                 </div>
                 </div>
