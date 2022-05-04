@@ -59,11 +59,12 @@
 <div class="card">
     <div class="col s4">
         <div class="card-content">
-            {% if pet.prescription.count %}
-                {% for prescription in pet.prescription.all %} 
+            {% if pet.prescriptions.count %}
+                {% for prescription in pet.prescriptions.all %}
                     <div class="card">
                         <div class="card-content">
-                            <p>{{ pet.prescription }}</p>
+                            <p>{{ prescription.dosage }} of {{ prescription.name }}. Refills: {{ prescription.refills }}</p>
+                            {% comment %} <p>{{ apidata[prescriptions.index(prescription)].name }} | {{ apidata[prescriptions.index(prescription)].generic }} | {{ apidata[prescriptions.index(prescription)].active }} | {{ apidata[prescriptions.index(prescription)].purpose }} | {% endcomment %}
                         </div>
                     </div>
                 {% endfor %}

@@ -12,7 +12,14 @@ class Profile(models.Model):
 
     def __str__(self):
     	return f"User ID: {self.user} Profile ID: {self.id}"
-    
+
+class Prescription(models.Model):
+    name = models.CharField(max_length=100)
+    dosage = models.CharField(max_length=50)
+    refills = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"Prescription Name: {self.name} ID: {self.id}"    
 
 class Pet(models.Model):
     name = models.CharField(max_length=100)
@@ -24,6 +31,7 @@ class Pet(models.Model):
     weight = models.IntegerField()
     notes = models.CharField(max_length=1000)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    prescriptions = models.ManyToManyField(Prescription)
     # url = models.CharField(max_length=200)
 
     def get_absolute_url(self):
@@ -38,7 +46,6 @@ class Checkup(models.Model):
     note = models.CharField(max_length=200)
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
 
-
     class Meta:
         ordering = ['-date']
 
@@ -51,7 +58,6 @@ class Checkup(models.Model):
 
 class Photo(models.Model):
     url = models.CharField(max_length=200)
-    # checkup = models.ForeignKey(Checkup, on_delete=models.CASCADE)
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -60,10 +66,9 @@ class Photo(models.Model):
 class CheckupPhoto(models.Model):
     url = models.CharField(max_length=200)
     checkup = models.ForeignKey(Checkup, on_delete=models.CASCADE)
-    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
 
     def __str__(self):
-	    return f"Pet : {self.pet} ID: {self.id} URL: {self.url}" 
+	    return f"Checkup : {self.checkup} ID: {self.id} URL: {self.url}" 
 
 class Vet(models.Model):
     name = models.CharField(max_length=100)
@@ -76,9 +81,4 @@ class Vet(models.Model):
     def __str__(self):
 	    return f"Vet Name : {self.name} ID: {self.id}"    
 
-# class Prescriptions(models.Model):
-#     name = models.CharField(max_length=100)
-#     dosage = models.CharField(max_length=50)
-#     refills = models.CharField(max_length=100)
-#     # api fields needed??????
-#     pet = models.ManyToManyField(Pet)
+
