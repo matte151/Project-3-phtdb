@@ -27,7 +27,7 @@ h1 {
 }
 
 span {
-    color: lightskyblue;
+    color: #e1f5fe;
     -webkit-text-stroke: 1px black;
     font-size: large;
     font-family: 'Fredoka One', cursive;
@@ -37,6 +37,40 @@ p{
     color: black;
     font-size: medium;
 }
+
+.datepicker-date-display {
+    background-color: #0d47a1 !important;
+}
+
+.datepicker-day-button:focus {
+    color: white !important;
+    background-color: #0d47a1
+}
+.select-dropdown li>span {
+    color: #e1f5fe !important
+}
+
+.is-today {
+    color: #0d47a1 !important
+}
+
+.datepicker-done,
+.datepicker-cancel {
+    color: black !important;
+}
+
+td.is-selected,
+.month-prev:active,
+.month-prev:focus,
+.month-next:active,
+.month-next:focus {
+    background-color: #0d47a1 !important
+}
+
+td.is-selected.is-today {
+    color: white !important
+}
+
 
 
 
