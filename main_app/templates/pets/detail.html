@@ -71,37 +71,35 @@
         </div>
     </div>
 </div>
+
+
 <div class="col s6">
-    
-    <div class="card">
-        <div class="card-content">
-    <form id="add-checkup-form" method="POST" action="{% url 'detail' pet.id %}">
-        <label><h7>DATE:</h7></label>
-        <input type="datetime" name="date">
+    <form method="post" action="{% url 'add_checkup' pet.id %}">
         <label><h7>PET:</h7></label>
-        <div name="pet"><h6>{{ pet.name }}</h6></div>
-        <label><h7>Note:</h7></label>
-        <textarea name="note" style="height: 150px;"></textarea>
-        <br><br>
-        <input type="file" name="photo-file"> 
-    </form>
-    <br>
-<form method="post" action="{% url 'add_checkup' pet.id %}">
+        <div><h5>{{ pet.name }}</h5></div>
         {% csrf_token %}
-        <!-- {{ checkup_form.as_p }} -->
-        <input type="submit" class="btn" value="Add Checkup">
+        {{ checkup_form.as_p }}
+        <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+            {% csrf_token %}
+           <input type="file" name="photo-file">
+           <br><br>
+           <input type="submit" class="btn" value="Add Checkup">
+           </form>
+        <!-- <input type="submit" class="btn" value="Add Checkup"> -->
     </form>
-</div></div>
+    
+
+</div>
 
     <div class="card">
         <div class="col s6">
-            {% if pet.checkups.count %}
-            {% for checkup in pet.checkups.all %}
+            {% if pet.checkup_set.count %}
+            {% for checkup in pet.checkup_set.all %}
                 <div class="card">
                 <div class="card-content">
                     <!-- {{ checkup.photo }} -->
                     <p>{{ checkup.date }}</p>
-                    <p>{{ checkup.pet }}</p>
+                    <h5>{{ checkup.pet.name }}</h5>
                     <p>{{ checkup.note }}</p>
                     </span>
                 </div>

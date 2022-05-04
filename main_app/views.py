@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 
 import uuid
 import boto3
-from .models import Pet, Photo
+from .models import Pet, Photo, CheckupPhoto
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
@@ -33,11 +33,12 @@ def pets_index(request):
 @login_required
 def pets_detail(request, pet_id):
     pet = Pet.objects.get(id=pet_id)
-    # checkup_form = CheckupForm()
-    return render(request, 'pets/detail.html', {'pet': pet })
+    checkup_form = CheckupForm()
+    return render(request, 'pets/detail.html', {'pet': pet, 'checkup_form': checkup_form, })
 
 # We need to set this up so that only Vets can add pets.
 class PetCreate(LoginRequiredMixin, CreateView):
+    print("saby")
     model = Pet
     fields = ['name', 'type', 'subtype', 'sex', 'birthday', 'color', 'weight']
     success_url = '/pets/'
@@ -45,6 +46,21 @@ class PetCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+def add_checkup(request, pet_id): 
+    print('Hello World')
+    form = CheckupForm(request.POST)
+    print(form.is_valid())
+    if form.is_valid():
+        new_checkup = form.save(commit=False)
+        new_checkup.pet_id = pet_id
+        new_checkup.save()
+
+    return redirect('detail', pet_id=pet_id)
+
+
+
 
 class PetUpdate(UpdateView):
     model = Pet
@@ -71,16 +87,6 @@ def signup(request):
 
 
 @login_required
-def add_checkup(request, pet_id):
-    form = CheckupForm(request.POST)
-    if form.is_valid():
-        new_checkup = form.save(commit=False)
-        new_checkup.pet_id = pet_id
-        new_checkup.save()
-
-    return redirect('detail', pet_id=pet_id)
-
-@login_required
 def add_photo(request, pet_id):
   photo_file = request.FILES.get('photo-file', None)
   if photo_file:
@@ -102,8 +108,8 @@ def add_cuphoto(request, checkup_id):
         try:
             s3.upload_fileobj(photo_file, BUCKEY, key)
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
-            Photo.objects.create(url=url, checkup_id=checkup_id)
+            CheckupPhoto.objects.create(url=url, pet_id=pet_id, checkup_id=checkup_id)
         except:
             print('We having an error here uploading to S3')
-    return redirect('detail', checkup_id=checkup_id)
+    return redirect('detail', pet_id=pet_id)
     
