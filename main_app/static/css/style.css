@@ -71,6 +71,14 @@ td.is-selected.is-today {
     color: white !important
 }
 
+.header-img {
+    width: 100%;
+    height: 20vh;
+    background: url('https://d1n6ollu2qc3al.cloudfront.net/app/uploads/20220318160402/dog-with-stethoscope.png');
+    background-size: cover;
+    border: 2px solid black;
+}
+  
 
 
 
