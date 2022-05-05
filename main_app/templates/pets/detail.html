@@ -68,8 +68,6 @@
                     <div class="card">
                         <div class="card-content">
                             <p>{{ point.dosage }} of {{ point.name }}. Refills: {{ point.refills }}</p>
-                            {% comment %} API data is stored as objects in apidata. We need to know the information of a specific one. {% endcomment %}
-                            {% comment %} They're stored in a list of objects.  So we should be able to: apidata[0][name] {% endcomment %}
                             <p>{{ point.generic.0 }} | {{ point.active.0 }} | {{ point.purpose.0 }} | {{ point.usage.0 }} | </p>
                         </div>
                     </div>
