@@ -96,9 +96,9 @@
             {% for checks in pet.checkup_set.all %}
                 <div class="card">
                 <div class="card-content">
-                    <p> {{checks}}</p>
+                    <!-- <p> {{checks}}</p> -->
                     {% for photo in checkup_photos %}
-                    <p>{{photo.checkup}}</p>
+                    <!-- <p>{{photo.checkup}}</p> -->
                     {% if photo.checkup == checks %}
                     <img src="{{ photo.url }}">
                     {% endif %}
@@ -126,20 +126,7 @@
     </div>
 </div>
 
-<script>
-    const dateEl = document.getElementById('id_date');
-    M.Datepicker.init(dateEl, {
-        format: 'yyyy-mm-dd',
-        defaultDate: new Date(),
-        setDefaultDate: true,
-        autoClose: true
-    })
-    
-    const selectEl = document.getElementById('id_meal');
-    M.FormSelect.init(selectEl)
 
-
-</script>
 {% endblock content %}
 
 
