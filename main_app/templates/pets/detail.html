@@ -100,7 +100,6 @@
                     {% for photo in checkup_photos %}
                     <p>{{photo.checkup}}</p>
                     {% if photo.checkup == checks %}
-                    <p>WE GOT A TRUE!!!</p>
                     <img src="{{ photo.url }}">
                     {% endif %}
                     {% empty %}
@@ -108,7 +107,6 @@
                     
                     {% endfor %}
                     
-                    <p>{{ checks.date }}</p>
                     <h5>{{ checks.pet.name }}</h5>
                     <p>{{ checks.note }}</p>
                     <form action="{% url 'add_cuphoto' pet.id checks.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
