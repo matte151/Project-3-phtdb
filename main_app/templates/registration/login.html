@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div><h1>Welcome to Pet Health Tracker!</h1></div>
+<div><h3>Log In!</h3></div>
 
-<h1>Log In</h1>
-
-<form method="post" action="">
+<form method="post" action="" class="row center">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" class="btn" value="Log In">
+    <input type="submit" class="btn blue darken-4" value="Log In">
     <input type="hidden" name="next" value="{{ next }}">
 </form> 
 

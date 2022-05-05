@@ -83,7 +83,6 @@
         {{ checkup_form.as_p }}
         <input type="submit" class="btn blue darken-4" value="Add Checkup">
     </form>
-    
 
 </div>
 
@@ -97,7 +96,7 @@
                     <p>{{ checkup.date }}</p>
                     <h5>{{ checkup.pet.name }}</h5>
                     <p>{{ checkup.note }}</p>
-                    <form action="{% url 'add_checkup' pet.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+                    <form action="{% url 'detail' checkup.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
                         {% csrf_token %}
                        <input type="file" name="photo-file">
                        <br><br>
