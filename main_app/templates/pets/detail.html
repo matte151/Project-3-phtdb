@@ -10,15 +10,6 @@
             {% empty %}
             <div class="card-panel blue-text center-align">No Photos Uploaded</div>
             {% endfor %}
-            <a class="btn-floating halfway-fab waves-effect waves- blue darken-4">
-                <i class="material-icons">add</i>
-                <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-                    {% csrf_token %}
-                    <input type="file" name="photo-file">
-                    <br><br>
-                    <input type="submit" class="btn" value="Upload Photo">
-                </form>
-            </a>
           </div>
           <div class="card-content">
             <p>Name: {{ pet.name }}</p> 
@@ -38,11 +29,26 @@
     <div class="col s4 offset-s4">
         <div class="card">
             <div class="card-content">
+                <h2 class="center-align">Vet Info</h2>
                 <p>Vet Name:{{ vet.name }}</p>
                 <p>Address:{{ vet.address }}</p>
                 <p>Email:{{ vet.email }}</p>
                 <p>Phone Number:{{ vet.phone }}</p>
             </div>
+            <div class="card-tabs">
+                <ul class="tabs tabs-fixed-width">
+                  <li class="tab"><a href="#">Prescriptions</a></li>
+                </ul>
+              </div>
+              <div class="card-content grey lighten-4">
+                <div id="test4">
+                    <form method="post" action="{% url 'add_checkup' pet.id %}">
+                        {% csrf_token %}
+                        {{ checkup_form.as_p }}
+                        <input type="submit" class="btn blue darken-4" value="Add Prescriptions">
+                    </form>
+                </div>
+              </div>
         </div>
     </div>
 </div>
@@ -52,12 +58,12 @@
         {% csrf_token %}
         <input type="file" name="photo-file">
         <br><br>
-        <input type="submit" class="btn blue darken-4" value="Upload Photo">
+        <input type="submit" class="btn blue darken-4" value="Upload Profile"><i class=" small material-icons">add_a_photo</i>
     </form>
 </div>
 
 <div class="card">
-    <div class="col s4">
+    <div class="col s4 ">
         <div class="card-content">
             {% if pet.prescription.count %}
                 {% for prescription in pet.prescription.all %} 
@@ -123,6 +129,23 @@
   
     const selectEl = document.getElementById('id_meal');
     M.FormSelect.init(selectEl)
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, options);
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    const selectEl = document.getElementById('id_photo');
+    var instances = M.FloatingActionButton.init(elems, {
+      direction: 'left',
+      hoverEnabled: false
+    });
+  });
+
+  
+
 </script>
 {% endblock content %}
 
