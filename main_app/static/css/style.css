@@ -81,10 +81,14 @@ td.is-selected.is-today {
 
 .logo {
     height: 60px;
-    margin-right: 0px;
-    margin-left: 620px;
-    display: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
 }
+
+
 
 
 

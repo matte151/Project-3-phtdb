@@ -10,15 +10,6 @@
             {% empty %}
             <div class="card-panel blue-text center-align">No Photos Uploaded</div>
             {% endfor %}
-            <a class="btn-floating halfway-fab waves-effect waves- blue darken-4">
-                <i class="material-icons">add</i>
-                <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-                    {% csrf_token %}
-                    <input type="file" name="photo-file">
-                    <br><br>
-                    <input type="submit" class="btn" value="Upload Photo">
-                </form>
-            </a>
           </div>
           <div class="card-content">
             <p>Name: {{ pet.name }}</p> 
@@ -34,30 +25,43 @@
             <a href="{% url 'pets_delete' pet.id %}">Delete</a>
         </div>
         </div>
+        <div id="upload">
+            <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <input type="file" name="photo-file">
+                <br><br>
+                <input type="submit" class="btn blue darken-4" value="Upload Profile"><i class=" small material-icons">add_a_photo</i>
+            </form>
+        </div>
     </div>
     <div class="col s4 offset-s4">
         <div class="card">
             <div class="card-content">
+                <h2 class="center-align">Vet Info</h2>
                 <p>Vet Name:{{ vet.name }}</p>
                 <p>Address:{{ vet.address }}</p>
                 <p>Email:{{ vet.email }}</p>
                 <p>Phone Number:{{ vet.phone }}</p>
             </div>
+            <div class="card-tabs">
+                <ul class="tabs tabs-fixed-width">
+                  <li class="tab"><a href="#">Prescriptions</a></li>
+                </ul>
+              </div>
+              <div class="card-content grey lighten-4">
+                <div id="test4">
+                    <form method="post" action="{% url 'add_checkup' pet.id %}">
+                        {% csrf_token %}
+                        {{ checkup_form.as_p }}
+                        <input type="submit" class="btn blue darken-4" value="Add Prescriptions">
+                    </form>
+                </div>
+              </div>
         </div>
     </div>
 </div>
-
-<div id="upload">
-    <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST">
-        {% csrf_token %}
-        <input type="file" name="photo-file">
-        <br><br>
-        <input type="submit" class="btn blue darken-4" value="Upload Photo">
-    </form>
-</div>
-
 <div class="card">
-    <div class="col s4">
+    <div class="col s4 ">
         <div class="card-content">
             {% if pet.prescriptions.count %}
                 {% for point in apidata %}
@@ -134,9 +138,11 @@
         setDefaultDate: true,
         autoClose: true
     })
-  
+    
     const selectEl = document.getElementById('id_meal');
     M.FormSelect.init(selectEl)
+
+
 </script>
 {% endblock content %}
 
