@@ -56,7 +56,26 @@
     </form>
 </div>
 
-
+<div class="card">
+    <div class="col s4">
+        <div class="card-content">
+            {% if pet.prescriptions.count %}
+                {% for point in apidata %}
+                    <div class="card">
+                        <div class="card-content">
+                            <p>{{ point.dosage }} of {{ point.name }}. Refills: {{ point.refills }}</p>
+                            {% comment %} API data is stored as objects in apidata. We need to know the information of a specific one. {% endcomment %}
+                            {% comment %} They're stored in a list of objects.  So we should be able to: apidata[0][name] {% endcomment %}
+                            <p>{{ point.warnings }} |</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h5 class="center-align">No Prescriptions</h5>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
 <div class="col s6">
     <form method="post" action="{% url 'add_checkup' pet.id %}">
@@ -79,9 +98,7 @@
                     <p>{{ checkup.date }}</p>
                     <h5>{{ checkup.pet.name }}</h5>
                     <p>{{ checkup.note }}</p>
-
-                    <form action="{% url 'add_cuphoto' pet.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-
+                    <form action="{% url 'add_cuphoto' pet.id checkup.id %}" method="POST" class="card-panel">
                         {% csrf_token %}
                        <input type="file" name="photo-file">
                        <br><br>
