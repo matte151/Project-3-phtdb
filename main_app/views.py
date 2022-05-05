@@ -92,6 +92,14 @@ def add_checkup(request, pet_id):
 
     return redirect('detail', pet_id=pet_id)
 
+def edit_checkup(request, pet_id, checkup_id):
+    print("....")
+    instance = Checkup.objects.get(id=checkup_id)
+    print(instance)
+    form = CheckupForm(request.POST, instance=instance)
+    if form.is_valid():
+       form.save()
+    return redirect('detail', pet_id=pet_id)
 
 
 

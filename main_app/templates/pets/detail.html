@@ -95,10 +95,14 @@
             {% if pet.checkup_set.count %}
             {% for checks in pet.checkup_set.all %}
                 <div class="card">
+                    <form action="{% url 'edit_checkup' pet.id checks.id %}" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" class="btn blue darken-4" value="Edit">
+                    </form>
                 <div class="card-content">
-                    <!-- <p> {{checks}}</p> -->
+                    
                     {% for photo in checkup_photos %}
-                    <!-- <p>{{photo.checkup}}</p> -->
                     {% if photo.checkup == checks %}
                     <img src="{{ photo.url }}">
                     {% endif %}
