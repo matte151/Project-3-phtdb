@@ -67,6 +67,9 @@ class CheckupPhoto(models.Model):
     url = models.CharField(max_length=200)
     checkup = models.ForeignKey(Checkup, on_delete=models.CASCADE)
 
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'cuphoto': self.id})
+
     def __str__(self):
 	    return f"Checkup : {self.checkup} ID: {self.id} URL: {self.url}" 
 
