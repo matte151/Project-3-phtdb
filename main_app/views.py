@@ -3,7 +3,7 @@ import requests
 
 import uuid
 import boto3
-from .models import Pet, Photo, CheckupPhoto, Prescription
+from .models import Pet, Photo, Checkup, CheckupPhoto, Prescription
 from django.http import HttpResponse
 from django.db import models
 
@@ -56,6 +56,8 @@ def pets_index(request):
 @login_required
 def pets_detail(request, pet_id):
     pet = Pet.objects.get(id=pet_id)
+    pet.checkup_set.all()
+    checkup = Checkup.objects.filter(pet=pet_id)
     apidata = []
     # for prescription in pet.prescriptions.all():
     #     url = f'https://api.fda.gov/drug/label.json?api_key={APIKEY}&search={prescription.name}'
@@ -64,7 +66,7 @@ def pets_detail(request, pet_id):
     #     data_point = APIPrescription(prescription.name,data["results"][0]['warnings'],data["results"][0]["active_ingredient"],data['results'][0]['purpose'],data['results'][0]['when_using'],data['results'][0]['openfda']['generic_name'])
     #     apidata.append(data_point)
     checkup_form = CheckupForm()
-    return render(request, 'pets/detail.html', {'pet': pet, 'apidata': apidata, 'checkup_form': checkup_form, 'apiprescriptions': apiprescriptions})
+    return render(request, 'pets/detail.html', {'pet': pet, 'apidata': apidata, 'checkup_form': checkup_form, 'checkup': checkup, 'apiprescriptions': apiprescriptions})
 
 # We need to set this up so that only Vets can add pets.
 class PetCreate(LoginRequiredMixin, CreateView):
@@ -129,6 +131,7 @@ def add_photo(request, pet_id):
   return redirect('detail', pet_id=pet_id)
 
 def add_cuphoto(request, checkup_id):
+    print("helllllo")
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
         s3 = boto3.client('s3')
@@ -137,7 +140,8 @@ def add_cuphoto(request, checkup_id):
             s3.upload_fileobj(photo_file, BUCKET, key)
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
             CheckupPhoto.objects.create(url=url, checkup_id=checkup_id)
+        
         except:
             print('We having an error here uploading to S3')
-    return redirect('detail', pet_id=pet_id)
+    return redirect('detail', checkup_id=checkup_id)
     
