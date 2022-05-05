@@ -129,22 +129,7 @@
   
     const selectEl = document.getElementById('id_meal');
     M.FormSelect.init(selectEl)
-    
-    document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.fixed-action-btn');
-    var instances = M.FloatingActionButton.init(elems, options);
-  });
 
-  document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.fixed-action-btn');
-    const selectEl = document.getElementById('id_photo');
-    var instances = M.FloatingActionButton.init(elems, {
-      direction: 'left',
-      hoverEnabled: false
-    });
-  });
-
-  
 
 </script>
 {% endblock content %}
