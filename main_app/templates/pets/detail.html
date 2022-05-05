@@ -66,7 +66,7 @@
                             <p>{{ point.dosage }} of {{ point.name }}. Refills: {{ point.refills }}</p>
                             {% comment %} API data is stored as objects in apidata. We need to know the information of a specific one. {% endcomment %}
                             {% comment %} They're stored in a list of objects.  So we should be able to: apidata[0][name] {% endcomment %}
-                            <p>{{ point.warnings }} |</p>
+                            <p>{{ point.generic.0 }} | {{ point.active.0 }} | {{ point.purpose.0 }} | {{ point.usage.0 }} | </p>
                         </div>
                     </div>
                 {% endfor %}
@@ -91,14 +91,25 @@
     <div class="card">
         <div class="col s6">
             {% if pet.checkup_set.count %}
-            {% for checkup in pet.checkup_set.all %}
+            {% for checks in pet.checkup_set.all %}
                 <div class="card">
                 <div class="card-content">
-                    {{ checkup.photo }}
-                    <p>{{ checkup.date }}</p>
-                    <h5>{{ checkup.pet.name }}</h5>
-                    <p>{{ checkup.note }}</p>
-                    <form action="{% url 'add_cuphoto' pet.id checkup.id %}" method="POST" class="card-panel">
+                    <p> {{checks}}</p>
+                    {% for photo in checkup_photos %}
+                    <p>{{photo.checkup}}</p>
+                    {% if photo.checkup == checks %}
+                    <p>WE GOT A TRUE!!!</p>
+                    <img src="{{ photo.url }}">
+                    {% endif %}
+                    {% empty %}
+                    <div class="card-panel blue-text center-align">No Photos Uploaded</div>
+                    
+                    {% endfor %}
+                    
+                    <p>{{ checks.date }}</p>
+                    <h5>{{ checks.pet.name }}</h5>
+                    <p>{{ checks.note }}</p>
+                    <form action="{% url 'add_cuphoto' pet.id checks.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
                         {% csrf_token %}
                        <input type="file" name="photo-file">
                        <br><br>
