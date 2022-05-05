@@ -6,7 +6,7 @@
 
 {% if error_message %}<p> {{error_message }}</p>{% endif %}
 
-<form action="{% url 'signup' %}" method="post">
+<form action="{% url 'signup' %}" method="post" class="row center">
     {% csrf_token %}
 
     {{ form.as_p }}
