@@ -3,6 +3,7 @@ from django.db import models
 from django.forms import DateField
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.utils import timezone
 # Create your models here.
 
 class Profile(models.Model):
@@ -42,7 +43,7 @@ class Pet(models.Model):
 
 
 class Checkup(models.Model):
-    date = models.DateField()
+    date = models.DateField(default=timezone.now)
     note = models.CharField(max_length=200)
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
 
@@ -72,7 +73,7 @@ class Vet(models.Model):
     address = models.CharField(max_length=500)
     email = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
-    pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
+    pet = models.ManyToManyField(Pet)
     user = models.OneToOneField(User,on_delete=models.CASCADE)
 
     def __str__(self):
