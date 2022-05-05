@@ -16,25 +16,26 @@
 </head>
 <body>
     <nav>
-        <div class="nav-wrapper light-blue lighten-4">
+        <div class="nav-wrapper blue darken-4">
           <a href="{% url 'about' %}" id="title-header" class="brand-logo">Pet Health Tracker</a>
+          <img class="logo" src="https://github.com/haileylujah/Project-3-phtdb/blob/master/main_app/imgs/phtlogo.png?raw=true">
           <ul class="links right">
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'pets_create' %}" class="black-text text-darken-2" >Add Pet</a></li>
-            <li><a href="{% url 'index' %}" class="black-text text-darken-2">View Pets</a></li>
-            <li><a href="{% url 'logout'%}" class="black-text text-darken-2 ">Log Out</a></li>
-            {% else %}
-            <li><a href="{% url 'login' %}" class="black-text text-darken-2">Login</a></li>
-            <li><a href="{% url 'signup' %}" class="black-text text-darken-2">Sign Up</a></li>
-            {% endif %}
-        </ul>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'pets_create' %}">Add Pet</a></li>
+                <li><a href="{% url 'index' %}">View Pets</a></li>
+                <li><a href="{% url 'logout'%}">Log Out</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}" >Login</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                {% endif %}
+            </ul>
         </div>
       </nav>
      <main class="container">
          {% block content %}
          {% endblock %}
      </main>
-     <footer class="page-footer light-blue lighten-4 black-text">
+     <footer class="page-footer blue darken-4 ">
         <div class="center">All Rights Reserved, &copy; 2022 Pet Health Tracker &nbsp;</div>
      </footer>
 </body>
