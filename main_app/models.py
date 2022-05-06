@@ -29,10 +29,10 @@ class Pet(models.Model):
     sex = models.CharField(max_length=10)
     birthday = models.DateField()
     color = models.CharField(max_length=100)
-    weight = models.IntegerField()
-    notes = models.CharField(max_length=1000)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    prescriptions = models.ManyToManyField(Prescription)
+    weight = models.IntegerField(blank=True)
+    notes = models.CharField(max_length=1000, blank=True)
+    user = models.ForeignKey(User, blank=True, on_delete=models.CASCADE)
+    prescriptions = models.ManyToManyField(Prescription, blank=True)
     # url = models.CharField(max_length=200)
 
     def get_absolute_url(self):
@@ -76,7 +76,7 @@ class Vet(models.Model):
     address = models.CharField(max_length=500)
     email = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
-    pet = models.ManyToManyField(Pet)
+    pet = models.ManyToManyField(Pet, blank=True)
     user = models.OneToOneField(User,on_delete=models.CASCADE)
 
     def __str__(self):
