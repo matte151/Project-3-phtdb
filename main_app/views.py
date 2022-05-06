@@ -60,7 +60,6 @@ def pets_index(request):
 def pets_detail(request, pet_id):
     pet = Pet.objects.get(id=pet_id)
     pet.checkup_set.all()
-    checkup = Checkup.objects.filter(id=pet_id)
     checkup_photos = CheckupPhoto.objects.all()
     apidata = []
     for prescription in pet.prescriptions.all():
@@ -93,22 +92,14 @@ def add_checkup(request, pet_id):
 
     return redirect('detail', pet_id=pet_id)
 
-# def edit_checkup(request, pet_id, checkup_id):
-#     print("....")
-#     instance = Checkup.objects.get(id=checkup_id)
-#     print(instance)
-#     form = CheckupForm(request.POST, instance=instance)
-#     if form.is_valid():
-#        form.save()
-#     return redirect('detail', pet_id=pet_id)
 
 class CheckupUpdate(UpdateView):
     model = Checkup
     fields = ['note']
 
-class CheckupDelete(DeleteView):
-    model = Checkup
-    success_url = '/pets/'
+# class CheckupDelete(DeleteView):
+#     model = Checkup
+#     success_url = '/pets/'
 
 class PetUpdate(UpdateView):
     model = Pet
