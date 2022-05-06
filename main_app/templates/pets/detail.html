@@ -18,7 +18,7 @@
             <p>Sex: {{ pet.sex }}</p>
             <p>Birthday: {{ pet.birthday }}</p>
             <p>Color: {{ pet.color }}</p>
-            <p>Weight: {{ pet.weight }}</p>
+            <p>Weight: {{ pet.weight }}lbs</p>
           </div>
           <div class="card-action">
             <a href="{% url 'pets_update' pet.id %}">Edit</a>
@@ -95,11 +95,10 @@
             {% if pet.checkup_set.count %}
             {% for checks in pet.checkup_set.all %}
                 <div class="card">
-                    <form action="{% url 'edit_checkup' pet.id checks.id %}" method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <input type="submit" class="btn blue darken-4" value="Edit">
-                    </form>
+                    <div class="card-action">
+                        <a href="{% url 'checkup_update' pet.id checks.id %}">Edit</a>
+                        <a href="{% url 'checkup_delete' pet.id checks.id %}">Delete</a>
+                      </div> 
                 <div class="card-content">
                     
                     {% for photo in checkup_photos %}
