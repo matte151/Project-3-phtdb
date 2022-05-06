@@ -105,7 +105,13 @@ def add_checkup(request, pet_id):
     return redirect('detail', pet_id=pet_id)
 
 
+class CheckupUpdate(UpdateView):
+    model = Checkup
+    fields = ['note']
 
+# class CheckupDelete(DeleteView):
+#     model = Checkup
+#     success_url = '/pets/'
 
 class PetUpdate(UpdateView):
     model = Pet

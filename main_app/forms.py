@@ -5,3 +5,4 @@ class CheckupForm(ModelForm):
     class Meta:
         model = Checkup
         fields = ['note']
+

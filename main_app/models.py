@@ -50,6 +50,9 @@ class Checkup(models.Model):
     class Meta:
         ordering = ['-date']
 
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'pet_id': self.id,})
+
     def __str__(self):
 	    return f"Date : {self.date} for {self.pet.name} ID: {self.id}"
 
