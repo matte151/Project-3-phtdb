@@ -59,7 +59,13 @@ def about(request):
 @login_required
 def pets_index(request):
     pets = Pet.objects.filter(user=request.user)
-    return render(request, 'pets/index.html', {'pets': pets})
+    user_groups = request.user.groups.all()
+    print(user_groups)
+    vet_pets = Pet.objects.all()
+    this_vet = Vet.objects.get(user=request.user)
+    this_vet_pets = Pet.objects.filter(vet__id=this_vet.id)
+
+    return render(request, 'pets/index.html', {'pets': pets, 'user_groups': user_groups, 'this_vet_pets':this_vet_pets})
 
 @login_required
 def pets_detail(request, pet_id):

@@ -5,6 +5,8 @@
 
 <h1>Pet List</h1>
 
+{% for group in user_groups %}
+{% if group.name == 'client' %}
 {% for pet in pets %}
 <a href="{% url 'detail' pet.id %}">
 <div class="card">
@@ -13,13 +15,34 @@
         <p>Type: {{ pet.type }}</p>
         <p>Subtype: {{ pet.subtype }}</p>
         <p>Sex: {{ pet.sex }}</p>
-        <p>Birhtday: {{ pet.birthday }}</p>
+        <p>Birthday: {{ pet.birthday }}</p>
         <p>Color: {{ pet.color }}</p>
-        <p>Weight: {{ pet.weight }}</p>
+        <p>Weight: {{ pet.weight }}lbs</p>
     </div>
 </div>
 </a>
+
 {% endfor %}
 
+{% elif group.name == 'vet' %}
+{% for pet in this_vet_pets %}
+<a href="{% url 'detail' pet.id %}">
+<div class="card">
+    <div class="card-content">
+        <span class="card-title">{{ pet.name }}</span>
+        <p>Type: {{ pet.type }}</p>
+        <p>Subtype: {{ pet.subtype }}</p>
+        <p>Sex: {{ pet.sex }}</p>
+        <p>Birthday: {{ pet.birthday }}</p>
+        <p>Color: {{ pet.color }}</p>
+        <p>Weight: {{ pet.weight }}lbs</p>
+    </div>
+</div>
+</a>
+
+{% endfor %}
+{% endif %}
+
+{% endfor %}
 {% endblock %}
     
