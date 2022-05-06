@@ -4,17 +4,22 @@ import requests
 
 import uuid
 import boto3
-from .models import Pet, Photo, CheckupPhoto, Checkup, Prescription
+
+from .models import Pet, Photo, CheckupPhoto, User, Vet, Profile, Checkup, Prescription
+from .forms import CheckupForm
+
 from django.http import HttpResponse
 from django.db import models
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CheckupForm
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+def is_vet(user):
+    return user.groups.filter(name='vet').exists()
 
 S3_BASE_URL = 'https://s3.us-west-1.amazonaws.com/'
 BUCKET = 'phtdb'
@@ -62,6 +67,10 @@ def pets_detail(request, pet_id):
     pet.checkup_set.all()
     checkup_photos = CheckupPhoto.objects.all()
     apidata = []
+    user_groups = request.user.groups.all()
+    owner_profile = Profile.objects.get(user= pet.user)
+    owner = User.objects.get(id = pet.user_id)
+    pet_vet = Vet.objects.get(pet = pet_id)
     for prescription in pet.prescriptions.all():
         url = f'https://api.fda.gov/drug/label.json?api_key={APIKEY}&search={prescription.name}'
         response = requests.get(url)
@@ -69,10 +78,13 @@ def pets_detail(request, pet_id):
         data_point = APIPrescription(prescription.name,data["results"][0]['warnings'],data["results"][0]["active_ingredient"],data['results'][0]['purpose'],data['results'][0]['when_using'],data['results'][0]['openfda']['generic_name'],prescription.dosage,prescription.refills)
         apidata.append(data_point)
     checkup_form = CheckupForm()
-    return render(request, 'pets/detail.html', {'pet': pet, 'apidata': apidata, 'checkup_form': checkup_form, 'checkup_photos': checkup_photos,})
+    return render(request, 'pets/detail.html', {'pet': pet, 'apidata': apidata, 'checkup_form': checkup_form, 'checkup_photos': checkup_photos, 'pet_vet':pet_vet, 'user_groups': user_groups, 'owner': owner, 'owner_profile': owner_profile})
 
 # We need to set this up so that only Vets can add pets.
-class PetCreate(LoginRequiredMixin, CreateView):
+class PetCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='vet').exists()
+    permission_required = 'main_app.add_pet'
     model = Pet
     fields = ['name', 'type', 'subtype', 'sex', 'birthday', 'color', 'weight']
     success_url = '/pets/'

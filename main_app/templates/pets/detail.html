@@ -4,26 +4,31 @@
 <div class="row">
     <div class="col s4">
         <div class="card">
-          <div class="card-image">
-            {% for photo in pet.photo_set.all %}
-            <img src="{{ photo.url }}">
-            {% empty %}
-            <div class="card-panel blue-text center-align">No Photos Uploaded</div>
+            <div class="card-image">
+                {% for photo in pet.photo_set.all %}
+                <img src="{{ photo.url }}">
+                {% empty %}
+                <div class="card-panel blue-text center-align">No Photos Uploaded</div>
+                {% endfor %}
+            </div>
+            <div class="card-content">
+                <p>Name: {{ pet.name }}</p> 
+                <p>Type: {{ pet.type }}</p>
+                <p>Subtype: {{ pet.subtype }}</p>
+                <p>Sex: {{ pet.sex }}</p>
+                <p>Birthday: {{ pet.birthday }}</p>
+                <p>Color: {{ pet.color }}</p>
+                <p>Weight: {{ pet.weight }}</p>
+            </div>
+            {% for group in user_groups %}
+                {% if group.name == 'vet' %}
+                <div class="card-action">
+                    <a href="{% url 'pets_update' pet.id %}">Edit</a>
+                    <a href="{% url 'pets_delete' pet.id %}">Delete</a>
+                </div>
+                {% endif %}
             {% endfor %}
-          </div>
-          <div class="card-content">
-            <p>Name: {{ pet.name }}</p> 
-            <p>Type: {{ pet.type }}</p>
-            <p>Subtype: {{ pet.subtype }}</p>
-            <p>Sex: {{ pet.sex }}</p>
-            <p>Birthday: {{ pet.birthday }}</p>
-            <p>Color: {{ pet.color }}</p>
-            <p>Weight: {{ pet.weight }}lbs</p>
-          </div>
-          <div class="card-action">
-            <a href="{% url 'pets_update' pet.id %}">Edit</a>
-            <a href="{% url 'pets_delete' pet.id %}">Delete</a>
-        </div>
+          
         </div>
         <div id="upload">
             <form action="{% url 'add_photo' pet.id %}" enctype="multipart/form-data" method="POST">
@@ -34,30 +39,49 @@
             </form>
         </div>
     </div>
+    
     <div class="col s4 offset-s4">
         <div class="card">
-            <div class="card-content">
-                <h2 class="center-align">Vet Info</h2>
-                <p>Vet Name:{{ vet.name }}</p>
-                <p>Address:{{ vet.address }}</p>
-                <p>Email:{{ vet.email }}</p>
-                <p>Phone Number:{{ vet.phone }}</p>
-            </div>
+            {% for group in user_groups %}
+                {% if group.name == 'client' %}
+                    <div class="card-content">
+                        <h2 class="center-align">Vet Info</h2>
+                        <p>Vet Name:{{ pet_vet.name }}</p>
+                        <p>Address:{{ pet_vet.address }}</p>
+                        <p>Email:{{ pet_vet.email }}</p>
+                        <p>Phone Number:{{ pet_vet.phone }}</p>
+                    </div>
+                {% elif group.name == 'vet' %}
+                    <div class="card-content">
+                        <h2 class="center-align">Client Info</h2>
+                        <p>Owner Name:{{ owner.first_name }} {{ owner.last_name}}</p>
+                        <p>Address:{{ owner_profile.address }}</p>
+                        <p>Email:{{ owner.email }}</p>
+                        <p>Phone Number:{{ owner_profile.phone }}</p>
+                    </div>
+                {% else %}
+                    <div class="card-content">
+                        <h2 class="center-align">??? Info</h2>
+                        <p>You are neither a Vet nor a client</p>
+                        <p>Sorry no info to show off to you!</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
             <div class="card-tabs">
                 <ul class="tabs tabs-fixed-width">
                   <li class="tab"><a href="#">Prescriptions</a></li>
                 </ul>
-              </div>
-              <div class="card-content grey lighten-4">
-                <div id="test4">
-                    <form method="post" action="{% url 'add_checkup' pet.id %}">
-                        {% csrf_token %}
-                        {{ checkup_form.as_p }}
-                        <input type="submit" class="btn blue darken-4" value="Add Prescriptions">
-                    </form>
+            </div>
+                <div class="card-content grey lighten-4">
+                    <div id="test4">
+                        <form method="post" action="{% url 'add_checkup' pet.id %}">
+                            {% csrf_token %}
+                            {{ checkup_form.as_p }}
+                            <input type="submit" class="btn blue darken-4" value="Add Prescriptions">
+                        </form>
+                    </div>
                 </div>
-              </div>
-        </div>
+            </div>
     </div>
 </div>
 <div class="card">

@@ -4,5 +4,5 @@ from .models import Checkup
 class CheckupForm(ModelForm):
     class Meta:
         model = Checkup
-        fields = ['date', 'note']
+        fields = ['note']
 
